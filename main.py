@@ -5,6 +5,9 @@ import io
 import random
 import discord
 import datetime
+import tflearn
+import tensorflow
+import chatbot_framework
 
 from discord import opus
 from discord.ext.commands import Bot, has_permissions, CheckFailure, MissingPermissions
@@ -15,8 +18,6 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 client = commands.Bot(command_prefix='~')
-
-
 
 @client.event
 async def on_ready():
@@ -62,7 +63,7 @@ async def on_message(message):
         if channel.name != 'log':
             with io.open("bot_logs.log", "a", encoding="utf-8") as f:
                 f.write(
-                    f'{x} : {member} wrote:\n  "{message.content}"\nin {channel.id} {server.name}(id: {server.id}) \n')
+                    f'{x} : **{member}** wrote: **"{message.clean_content}"** ---- {channel.name} ---- {server.name}(id: {server.id}) \n')
             f.close()
     else:
         with io.open("chat_logs.log", "a", encoding="utf-8") as f:
@@ -84,8 +85,11 @@ async def on_message(message):
     kacp = '<@96289155050381312>'
     tomat = '<@242332338887852042>'
 
+    question = str(message)
+
     if channel.name != 'log':
         if not message.author.bot:
+            await channel.send(response(question))
             pass
 
 
@@ -160,7 +164,7 @@ async def ping(ctx):
 
 
 @client.command(help="| Clears inputted amount of messages or 5 by default")
-@has_permissions(administrator=True)
+# @has_permissions(administrator=True)
 async def clear(ctx, amount=5):
     member = ctx.message.author
     if amount <= 0:
@@ -220,17 +224,17 @@ async def join(ctx):
     member = ctx.message.author
     await ctx.send(f'{member.mention} has joined the conversation')
 
+
 @client.command(help='| no ', hidden=True)
 async def no(ctx):
     await ctx.channel.purge(limit=1)
     await ctx.send(f'no')
 
+
 @client.command(help='| yes ', hidden=True)
 async def yes(ctx):
     await ctx.channel.purge(limit=1)
     await ctx.send(f'yes')
-
-
 
 
 client.run(TOKEN)
