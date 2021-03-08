@@ -1,0 +1,2 @@
+model_checkpoint_path: "/Users/danielkrasovski/Documents/GitHub/Discord_AI_Bot/models/model.tflearn"
+all_model_checkpoint_paths: "/Users/danielkrasovski/Documents/GitHub/Discord_AI_Bot/models/model.tflearn"
