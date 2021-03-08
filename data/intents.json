@@ -1,0 +1,15 @@
+{"intents": [
+        {"tag": "Arabic:",
+         "start": ["Some movies in Arabic:", "List of 10 Arabic movies:"],
+         "patterns": ["Arabic", "arabic"],
+         "responses": ["data/responses_csv/languages/Arabic.csv"],
+         "context": [""]
+        },
+        {"tag": "Easter Eggs",
+         "start": [],
+          "patterns": ["Easter Egg"],
+          "responses": ["data/responses/easter_eggs.csv"],
+          "context": [""]
+        }
+]
+}
