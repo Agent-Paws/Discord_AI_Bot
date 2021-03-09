@@ -7,7 +7,7 @@
         },
         {"tag": "Dan",
          "start": [],
-          "patterns": ["Dan", "Daniel", "Danielius"],
+          "patterns": ["Dan", "Daniel", "Danielius","krasovski"],
           "responses": ["data/responses_csv/dan.csv"],
           "type": ["Emoji"]
         },
