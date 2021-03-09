@@ -32,7 +32,7 @@
         {"tag": "kacper",
          "start": [],
           "patterns": ["Kacper", "kacp", "one leg", "piekarski"],
-          "responses": ["data/responses_csv/max.csv"],
+          "responses": ["data/responses_csv/kacper.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Michal",
