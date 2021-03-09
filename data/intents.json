@@ -44,7 +44,7 @@
         {"tag": "Italian:",
          "start": ["Some Italian movies:", "10 movies in Italian:"],
          "patterns": ["Italian", "Italy", "italian"],
-         "responses": ["data/responses_csv/languages/Italien.csv"],
+         "responses": ["data/responses_csv/languages/Italian.csv"],
          "context": [""]
         },
 

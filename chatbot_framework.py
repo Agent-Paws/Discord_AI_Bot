@@ -21,7 +21,7 @@ train_y = data['train_y']
 # create a data structure to hold user context
 context = {}
 
-ERROR_THRESHOLD = 0.25
+ERROR_THRESHOLD = 0.90
 
 # import our chat-bot intents file
 import json

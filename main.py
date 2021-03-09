@@ -85,11 +85,14 @@ async def on_message(message):
     kacp = '<@96289155050381312>'
     tomat = '<@242332338887852042>'
 
-    question = str(message)
+    question = str(message.content)
 
     if channel.name != 'log':
         if not message.author.bot:
-            await channel.send(response(question))
+            if isinstance(chatbot_framework.response(question), str):
+                await channel.send(chatbot_framework.response(question))
+            else:
+                print(chatbot_framework.response(question))
             pass
 
 
