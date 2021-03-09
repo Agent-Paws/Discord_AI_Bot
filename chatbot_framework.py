@@ -21,7 +21,8 @@ train_y = data['train_y']
 # create a data structure to hold user context
 context = {}
 
-ERROR_THRESHOLD = 0.90
+response_type = "text"
+ERROR_THRESHOLD = 0.96
 
 # import our chat-bot intents file
 import json
@@ -114,22 +115,15 @@ def response(sentence, userID='123', show_details=False):
                             for row in reader:
                                 answer_list.insert(k, row)
                                 k += 1
-                        if i['tag'] != "Easter Eggs":
-                            answer = random.sample(answer_list, 10)
-                            answer = ', '.join(map(str, answer))
-                            answer = answer.replace("[", "").replace("'", "").replace("]", "")
-                            tag = random.choice(i['start'])
-                            tag = ''.join(map(str, tag))
-                            return tag + " " + answer
-                        else:
-                            answer = random.choice(answer_list)
-                            answer = ''.join(map(str, answer))
-                            answer = answer.replace("{", "").replace("}", "")
-                            return answer
+                    response_type = i['type']
+                    response_type = ''.join(response_type)
+                    answer = random.choice(answer_list)
+                    answer = ''.join(map(str, answer))
+                    answer = answer.replace("{", "").replace("}", "")
+
+                    return answer, response_type
 
             results.pop(0)
 
-
-classify("easter egg")
-message = response("easter egg")
-print(message)
+print(classify("hello"))
+result = response("hello")

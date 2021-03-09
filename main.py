@@ -5,8 +5,6 @@ import io
 import random
 import discord
 import datetime
-import tflearn
-import tensorflow
 import chatbot_framework
 
 from discord import opus
@@ -84,16 +82,24 @@ async def on_message(message):
     mich = '<@324653924416094212>'
     kacp = '<@96289155050381312>'
     tomat = '<@242332338887852042>'
-
     question = str(message.content)
 
+    response = chatbot_framework.response(question)
     if channel.name != 'log':
         if not message.author.bot:
-            if isinstance(chatbot_framework.response(question), str):
-                await channel.send(chatbot_framework.response(question))
-            else:
-                print(chatbot_framework.response(question))
-            pass
+            print(response)
+            if response:
+                if str(response[1]) == 'Text':
+                    await channel.send(response[0])
+                elif str(response[1]) == 'Emoji':
+                    emojis = list(response[0].split(" "))
+                    print(response[0])
+                    for emoji in emojis:
+                        await message.add_reaction(emoji)
+                else:
+                    #print(chatbot_framework.response(question))
+                    pass
+
 
 
 @client.event
