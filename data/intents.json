@@ -1,62 +1,57 @@
 {"intents": [
         {"tag": "Hello",
-         "start": [],
           "patterns": ["Hello","Hi"],
-          "responses": ["data/responses_csv/hello.csv"],
+          "responses": ["data/responses_csv/Text/hello.csv"],
+          "type": ["Text"]
+        },
+        {"tag": "Goodbye",
+          "patterns": ["Goodbye","cya","see ya","goodnight"],
+          "responses": ["data/responses_csv/Text/goodbye.csv"],
           "type": ["Text"]
         },
         {"tag": "Dan",
-         "start": [],
           "patterns": ["Dan", "Daniel", "Danielius","krasovski"],
-          "responses": ["data/responses_csv/dan.csv"],
+          "responses": ["data/responses_csv/Emoji/dan.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Sophie",
-         "start": [],
           "patterns": ["Soph", "Sophie"],
-          "responses": ["data/responses_csv/sophie.csv"],
+          "responses": ["data/responses_csv/Emoji/sophie.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Nik",
-         "start": [],
           "patterns": ["Nik", "Nikolay", "Kolus", "malyshev"],
-          "responses": ["data/responses_csv/nik.csv"],
+          "responses": ["data/responses_csv/Emoji/nik.csv"],
           "type": ["Emoji"]
         },
         {"tag": "max",
-         "start": [],
           "patterns": ["max", "maxim", "maximilian", "minimilian","zaharov"],
-          "responses": ["data/responses_csv/max.csv"],
+          "responses": ["data/responses_csv/Emoji/max.csv"],
           "type": ["Emoji"]
         },
         {"tag": "kacper",
-         "start": [],
           "patterns": ["Kacper", "kacp", "one leg", "piekarski"],
-          "responses": ["data/responses_csv/kacper.csv"],
+          "responses": ["data/responses_csv/Emoji/kacper.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Michal",
-         "start": [],
           "patterns": ["Mich", "Michal", "Korneluk"],
-          "responses": ["data/responses_csv/michal.csv"],
+          "responses": ["data/responses_csv/Emoji/michal.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Jude",
-         "start": [],
           "patterns": ["Jude", "jood", "joob"],
-          "responses": ["data/responses_csv/jude.csv"],
+          "responses": ["data/responses_csv/Emoji/jude.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Alex",
-         "start": [],
           "patterns": ["Alex", "Alexander"],
-          "responses": ["data/responses_csv/alex.csv"],
+          "responses": ["data/responses_csv/Emoji/alex.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Easter Eggs",
-         "start": [],
           "patterns": ["Easter Egg"],
-          "responses": ["data/responses_csv/easter_eggs.csv"],
+          "responses": ["data/responses_csv/Text/easter_eggs.csv"],
           "type": ["Text"]
         }
 ]
