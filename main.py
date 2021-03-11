@@ -87,13 +87,11 @@ async def on_message(message):
     response = chatbot_framework.response(question)
     if channel.name != 'log':
         if not message.author.bot:
-            print(response)
             if response:
                 if str(response[1]) == 'Text':
                     await channel.send(response[0])
                 elif str(response[1]) == 'Emoji':
                     emojis = list(response[0].split(" "))
-                    print(response[0])
                     for emoji in emojis:
                         await message.add_reaction(emoji)
                 else:

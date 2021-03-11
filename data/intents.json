@@ -5,8 +5,13 @@
           "type": ["Text"]
         },
         {"tag": "Goodbye",
-          "patterns": ["Goodbye","cya","see ya","goodnight"],
+          "patterns": ["Goodbye","cya","see ya","goodnight", "good bye"],
           "responses": ["data/responses_csv/Text/goodbye.csv"],
+          "type": ["Text"]
+        },
+        {"tag": "nice",
+          "patterns": ["nice","Nice", "noice"],
+          "responses": ["data/responses_csv/Text/nice.csv"],
           "type": ["Text"]
         },
         {"tag": "Dan",
@@ -47,6 +52,16 @@
         {"tag": "Alex",
           "patterns": ["Alex", "Alexander"],
           "responses": ["data/responses_csv/Emoji/alex.csv"],
+          "type": ["Emoji"]
+        },
+        {"tag": "Sasha",
+          "patterns": ["Sasha", "Slasha","kuchenmeister"],
+          "responses": ["data/responses_csv/Emoji/sasha.csv"],
+          "type": ["Emoji"]
+        },
+        {"tag": "Raph",
+          "patterns": ["Raph", "Raphael","Ofeimu"],
+          "responses": ["data/responses_csv/Emoji/raph.csv"],
           "type": ["Emoji"]
         },
         {"tag": "Easter Eggs",

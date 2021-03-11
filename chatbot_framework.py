@@ -22,7 +22,7 @@ train_y = data['train_y']
 context = {}
 
 response_type = "text"
-ERROR_THRESHOLD = 0.96
+ERROR_THRESHOLD = 0.95
 
 # import our chat-bot intents file
 import json
