@@ -115,3 +115,4 @@ dmypy.json
 
 tflearn_logs/
 models/
+data/responses_csv/Text/nostalgia.csv

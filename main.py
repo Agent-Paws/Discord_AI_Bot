@@ -11,11 +11,14 @@ from discord import opus
 from discord.ext.commands import Bot, has_permissions, CheckFailure, MissingPermissions
 from discord.ext import commands
 from dotenv import load_dotenv
+from collections import namedtuple
 
 load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 client = commands.Bot(command_prefix='~')
+i = 0
+
 
 @client.event
 async def on_ready():
@@ -95,68 +98,84 @@ async def on_message(message):
                     for emoji in emojis:
                         await message.add_reaction(emoji)
                 else:
-                    #print(chatbot_framework.response(question))
+                    # print(chatbot_framework.response(question))
                     pass
 
 
-
-@client.event
-async def on_command_error(ctx, error):
-    # if command has local error handler, return
-    if hasattr(ctx.command, 'on_error'):
-        return
-
-    # get the original exception
-    error = getattr(error, 'original', error)
-
-    if isinstance(error, commands.CommandNotFound):
-        return
-
-    if isinstance(error, commands.BotMissingPermissions):
-        missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-        if len(missing) > 2:
-            fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-        else:
-            fmt = ' and '.join(missing)
-        _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
-        await ctx.send(_message)
-        return
-
-    if isinstance(error, commands.DisabledCommand):
-        await ctx.send('This command has been disabled.')
-        return
-
-    if isinstance(error, commands.CommandOnCooldown):
-        await ctx.send("This command is on cooldown, please retry in {}s.".format(math.ceil(error.retry_after)))
-        return
-
-    if isinstance(error, commands.MissingPermissions):
-        missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
-        if len(missing) > 2:
-            fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
-        else:
-            fmt = ' and '.join(missing)
-        _message = 'You need the **{}** permission(s) to use this command.'.format(fmt)
-        await ctx.send(_message)
-        return
-
-    if isinstance(error, commands.UserInputError):
-        await ctx.send("Invalid input.")
-        return
-
-    if isinstance(error, commands.NoPrivateMessage):
-        try:
-            await ctx.author.send('This command cannot be used in direct messages.')
-        except discord.Forbidden:
-            pass
-        return
-
-    if isinstance(error, commands.CheckFailure):
-        await ctx.send("You do not have permission to use this command.")
-        return
+# @client.event
+# async def on_command_error(ctx, error):
+#     # if command has local error handler, return
+#     if hasattr(ctx.command, 'on_error'):
+#         return
+#
+#     # get the original exception
+#     error = getattr(error, 'original', error)
+#
+#     if isinstance(error, commands.CommandNotFound):
+#         return
+#
+#     if isinstance(error, commands.BotMissingPermissions):
+#         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+#         if len(missing) > 2:
+#             fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+#         else:
+#             fmt = ' and '.join(missing)
+#         _message = 'I need the **{}** permission(s) to run this command.'.format(fmt)
+#         await ctx.send(_message)
+#         return
+#
+#     if isinstance(error, commands.DisabledCommand):
+#         await ctx.send('This command has been disabled.')
+#         return
+#
+#     if isinstance(error, commands.CommandOnCooldown):
+#         await ctx.send("This command is on cooldown, please retry in {}s.".format(math.ceil(error.retry_after)))
+#         return
+#
+#     if isinstance(error, commands.MissingPermissions):
+#         missing = [perm.replace('_', ' ').replace('guild', 'server').title() for perm in error.missing_perms]
+#         if len(missing) > 2:
+#             fmt = '{}, and {}'.format("**, **".join(missing[:-1]), missing[-1])
+#         else:
+#             fmt = ' and '.join(missing)
+#         _message = 'You need the **{}** permission(s) to use this command.'.format(fmt)
+#         await ctx.send(_message)
+#         return
+#
+#     if isinstance(error, commands.UserInputError):
+#         await ctx.send("Invalid input.")
+#         return
+#
+#     if isinstance(error, commands.NoPrivateMessage):
+#         try:
+#             await ctx.author.send('This command cannot be used in direct messages.')
+#         except discord.Forbidden:
+#             pass
+#         return
+#
+#     if isinstance(error, commands.CheckFailure):
+#         await ctx.send("You do not have permission to use this command.")
+#         return
 
 
 # COMMANDS
+
+my_dict = {'username': 'counter'}
+
+@client.command(pass_context=True)
+async def votekick(ctx, userName: discord.User):
+
+    if userName.name not in my_dict:
+        my_dict.update({userName.name: 1})
+    else:
+        my_dict[userName.name] += 1
+
+    counter = my_dict[userName.name]
+    print(my_dict)
+
+    await ctx.send(f'{counter}/4 people have voted to kick {userName}')
+
+    # await client.kick(userName)
 
 
 @client.command(help='| Responds with "Sup Bitch"')

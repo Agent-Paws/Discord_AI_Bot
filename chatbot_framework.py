@@ -124,6 +124,3 @@ def response(sentence, userID='123', show_details=False):
                     return answer, response_type
 
             results.pop(0)
-
-print(classify("hello"))
-result = response("hello")

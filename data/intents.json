@@ -68,6 +68,11 @@
           "patterns": ["Easter Egg"],
           "responses": ["data/responses_csv/Text/easter_eggs.csv"],
           "type": ["Text"]
+        },
+        {"tag": "Photos",
+          "patterns": ["nostalgia"],
+          "responses": ["data/responses_csv/Text/nostalgia.csv"],
+          "type": ["Text"]
         }
 ]
 }
