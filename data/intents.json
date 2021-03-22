@@ -9,6 +9,11 @@
           "responses": ["data/responses_csv/Text/goodbye.csv"],
           "type": ["Text"]
         },
+        {"tag": "bot disrespect",
+          "patterns": ["fuck off droid","fuck you droid","stfu droid"],
+          "responses": ["data/responses_csv/Text/disrespect.csv"],
+          "type": ["Text"]
+        },
         {"tag": "nice",
           "patterns": ["nice","Nice", "noice"],
           "responses": ["data/responses_csv/Text/nice.csv"],

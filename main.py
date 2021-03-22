@@ -170,12 +170,12 @@ async def votekick(ctx, userName: discord.User):
     else:
         my_dict[userName.name] += 1
 
-    counter = my_dict[userName.name]
-    print(my_dict)
+    await ctx.send(f'{my_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
 
-    await ctx.send(f'{counter}/4 people have voted to kick {userName}')
-
-    # await client.kick(userName)
+    if my_dict[userName.name] == 4:
+        await ctx.send(f'{userName.display_name} has been kicked')
+        my_dict.update({userName.name: 0})
+        #await client.kick(userName)
 
 
 @client.command(help='| Responds with "Sup Bitch"')
