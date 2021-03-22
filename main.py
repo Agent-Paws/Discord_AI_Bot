@@ -108,6 +108,7 @@ my_dict = {'username': 'counter'}
 
 @client.command(pass_context=True)
 async def votekick(ctx, userName: discord.User):
+    member = ctx.me
     if userName.name not in my_dict:
         my_dict.update({userName.name: 1})
     else:
@@ -118,7 +119,7 @@ async def votekick(ctx, userName: discord.User):
     if my_dict[userName.name] == 4:
         await ctx.send(f'{userName.display_name} has been kicked')
         my_dict.update({userName.name: 0})
-        # await client.kick(userName)
+        await discord.Guild.kick(member.guild, userName)
 
 
 @client.command(help='| Responds with "Sup Bitch"')
