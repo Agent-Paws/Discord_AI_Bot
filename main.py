@@ -10,6 +10,8 @@ import chatbot_framework
 from discord import opus
 from discord.ext.commands import Bot, has_permissions, CheckFailure, MissingPermissions
 from discord.ext import commands
+from threading import Timer
+import time
 from dotenv import load_dotenv
 from collections import namedtuple
 
@@ -109,12 +111,12 @@ voted_dict = {'username': 'voted for'}
 async def votekick(ctx, userName: discord.User):
     member = ctx.me
     voter = ctx.message.author.name
-    if voter not in voted_dict:
+    if voter not in voted_dict: #check if user has voted before or not, if not then add him to voted tuple
         voted_dict.update({voter: 'user'})
 
-    if str(voted_dict[voter]) == str(userName.name):
+    if str(voted_dict[voter]) == str(userName.name): #check if the user has voted for the same user before
         await ctx.send("You have already voted!")
-    else:
+    else: #add the vote
         if userName.name not in kick_dict:
             kick_dict.update({userName.name: 1})
             voted_dict.update({voter: userName.name})
@@ -122,30 +124,31 @@ async def votekick(ctx, userName: discord.User):
             kick_dict[userName.name] += 1
         await ctx.send(f'{kick_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
 
-    if kick_dict[userName.name] == 4:
+    if kick_dict[userName.name] == 4: ##once reaches limit, kicks user
         await ctx.send(f'{userName.display_name} has been kicked')
         kick_dict.update({userName.name: 0})
         #await discord.Guild.kick(member.guild, userName)
 
 mute_dict = {'username': 'counter'}
 mvoted_dict = {'username': 'voted for'}
+
+
 @client.command(pass_context=True)
 async def votemute(ctx, userName: discord.Member):
     voter = ctx.message.author.name
     member = ctx.me
-    if voter not in voted_dict:
+    if voter not in mvoted_dict:
         mvoted_dict.update({voter: 'user'})
 
-    if str(mvoted_dict[voter]) == str(userName.name):
+    if str(mvoted_dict[voter]) != str(userName.name):
         if userName.name not in mute_dict:
             mute_dict.update({userName.name: 1})
+            mvoted_dict.update({voter: userName.name})
         else:
             mute_dict[userName.name] += 1
+        await ctx.send(f'{mute_dict[userName.name]}/4 people have voted to mute {userName.display_name}')
     else:
-        ctx.send("You have already voted!")
-
-
-    await ctx.send(f'{mute_dict[userName.name]}/4 people have voted to mute {userName.display_name}')
+        await ctx.send("You have already voted!")
 
     if mute_dict[userName.name] == 4:
         mute_dict.update({userName.name: 0})
@@ -156,6 +159,9 @@ async def votemute(ctx, userName: discord.Member):
                               description="**{0}** was muted by **{1}**!".format(member, ctx.message.author),
                               color=0xff00f6)
         await ctx.send(embed=embed)
+        time.sleep(60)
+        await userName.remove_roles(role)
+
 
 @client.command(pass_context=True)
 async def unmute(ctx, userName: discord.Member):
