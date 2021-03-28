@@ -97,30 +97,66 @@ async def on_message(message):
                     for emoji in emojis:
                         await message.add_reaction(emoji)
                 else:
-                    # print(chatbot_framework.response(question))
+                    # print(chatbot_framework.context(question))
                     pass
 
 
 # COMMANDS
 
-my_dict = {'username': 'counter'}
-
-
+kick_dict = {'username': 'counter'}
+voted_dict = {'username':'voted for'}
+voted_dict1 = {'username':'voted for'}
 @client.command(pass_context=True)
 async def votekick(ctx, userName: discord.User):
     member = ctx.me
-    if userName.name not in my_dict:
-        my_dict.update({userName.name: 1})
+    voter = ctx.message.author.name
+    voted_dict1.update({voter: userName.name})
+    print({voter: userName.name})
+
+    if {voter: userName.name} not in voted_dict:
+        if userName.name not in kick_dict:
+            kick_dict.update({userName.name: 1})
+            voted_dict.update({voter: userName.name})
+            await ctx.send(f'{kick_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
+        else:
+            kick_dict[userName.name] += 1
+            await ctx.send(f'{kick_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
     else:
-        my_dict[userName.name] += 1
+        await ctx.send("you already voted")
 
-    await ctx.send(f'{my_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
-
-    if my_dict[userName.name] == 4:
+    if kick_dict[userName.name] == 4:
         await ctx.send(f'{userName.display_name} has been kicked')
-        my_dict.update({userName.name: 0})
-        await discord.Guild.kick(member.guild, userName)
+        kick_dict.update({userName.name: 0})
+        #await discord.Guild.kick(member.guild, userName)
 
+
+@client.command(pass_context=True)
+async def votemute(ctx, userName: discord.Member):
+    mute_dict = {'username': 'counter'}
+    member = ctx.me
+    if userName.name not in mute_dict:
+        mute_dict.update({userName.name: 1})
+    else:
+        mute_dict[userName.name] += 1
+
+    await ctx.send(f'{mute_dict[userName.name]}/4 people have voted to mute {userName.display_name}')
+
+    if mute_dict[userName.name] == 4:
+        mute_dict.update({userName.name: 0})
+        server = member.guild
+        role = server.get_role(825795491287138324)
+        await userName.add_roles(role)
+        embed = discord.Embed(title="User Muted!",
+                              description="**{0}** was muted by **{1}**!".format(member, ctx.message.author),
+                              color=0xff00f6)
+        await ctx.send(embed=embed)
+
+@client.command(pass_context=True)
+async def unmute(ctx, userName: discord.Member):
+    member = ctx.me
+    server = member.guild
+    role = server.get_role(825795491287138324)
+    await userName.remove_roles(role)
 
 @client.command(help='| Responds with "Sup Bitch"')
 async def hello(ctx):
@@ -205,6 +241,5 @@ async def no(ctx):
 async def yes(ctx):
     await ctx.channel.purge(limit=1)
     await ctx.send(f'yes')
-
 
 client.run(TOKEN)

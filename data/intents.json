@@ -5,7 +5,7 @@
           "type": ["Text"]
         },
         {"tag": "Goodbye",
-          "patterns": ["Goodbye","cya","see ya","goodnight", "good bye"],
+          "patterns": ["Goodbye","cya","goodnight"],
           "responses": ["data/responses_csv/Text/goodbye.csv"],
           "type": ["Text"]
         },
