@@ -104,40 +104,46 @@ async def on_message(message):
 # COMMANDS
 
 kick_dict = {'username': 'counter'}
-voted_dict = {'username':'voted for'}
-voted_dict1 = {'username':'voted for'}
+voted_dict = {'username': 'voted for'}
 @client.command(pass_context=True)
 async def votekick(ctx, userName: discord.User):
     member = ctx.me
     voter = ctx.message.author.name
-    voted_dict1.update({voter: userName.name})
-    print({voter: userName.name})
+    if voter not in voted_dict:
+        voted_dict.update({voter: 'user'})
 
-    if {voter: userName.name} not in voted_dict:
+    if str(voted_dict[voter]) == str(userName.name):
+        await ctx.send("You have already voted!")
+    else:
         if userName.name not in kick_dict:
             kick_dict.update({userName.name: 1})
             voted_dict.update({voter: userName.name})
-            await ctx.send(f'{kick_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
         else:
             kick_dict[userName.name] += 1
-            await ctx.send(f'{kick_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
-    else:
-        await ctx.send("you already voted")
+        await ctx.send(f'{kick_dict[userName.name]}/4 people have voted to kick {userName.display_name}')
 
     if kick_dict[userName.name] == 4:
         await ctx.send(f'{userName.display_name} has been kicked')
         kick_dict.update({userName.name: 0})
         #await discord.Guild.kick(member.guild, userName)
 
-
+mute_dict = {'username': 'counter'}
+mvoted_dict = {'username': 'voted for'}
 @client.command(pass_context=True)
 async def votemute(ctx, userName: discord.Member):
-    mute_dict = {'username': 'counter'}
+    voter = ctx.message.author.name
     member = ctx.me
-    if userName.name not in mute_dict:
-        mute_dict.update({userName.name: 1})
+    if voter not in voted_dict:
+        mvoted_dict.update({voter: 'user'})
+
+    if str(mvoted_dict[voter]) == str(userName.name):
+        if userName.name not in mute_dict:
+            mute_dict.update({userName.name: 1})
+        else:
+            mute_dict[userName.name] += 1
     else:
-        mute_dict[userName.name] += 1
+        ctx.send("You have already voted!")
+
 
     await ctx.send(f'{mute_dict[userName.name]}/4 people have voted to mute {userName.display_name}')
 
