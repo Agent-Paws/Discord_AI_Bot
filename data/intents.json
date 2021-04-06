@@ -14,11 +14,6 @@
           "responses": ["data/responses_csv/Text/disrespect.csv"],
           "type": ["Text"]
         },
-        {"tag": "nice",
-          "patterns": ["nice","Nice", "noice"],
-          "responses": ["data/responses_csv/Text/nice.csv"],
-          "type": ["Text"]
-        },
         {"tag": "Dan",
           "patterns": ["Dan", "Daniel", "Danielius","krasovski"],
           "responses": ["data/responses_csv/Emoji/dan.csv"],

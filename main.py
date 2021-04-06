@@ -3,6 +3,7 @@ import math
 import os
 import io
 import random
+import csv
 import discord
 import datetime
 import chatbot_framework
@@ -131,8 +132,6 @@ async def votekick(ctx, userName: discord.User):
 
 mute_dict = {'username': 'counter'}
 mvoted_dict = {'username': 'voted for'}
-
-
 @client.command(pass_context=True)
 async def votemute(ctx, userName: discord.Member):
     voter = ctx.message.author.name
@@ -170,6 +169,38 @@ async def unmute(ctx, userName: discord.Member):
     role = server.get_role(825795491287138324)
     await userName.remove_roles(role)
 
+
+@has_permissions(administrator=True)
+@client.command(pass_context=True)
+async def mute(ctx, userName: discord.Member):
+    member = ctx.me
+    server = member.guild
+    role = server.get_role(825795491287138324)
+    await userName.add_roles(role)
+
+
+@client.command(pass_context=True)
+async def nostalgia(ctx):
+    server = ctx.guild
+    channel = ctx.channel
+    answer_list = []
+
+    if channel.name == 'nostalgia':
+        with open('data/responses_csv/Text/nostalgia.csv', 'r', encoding="utf-8") as file:
+            reader = csv.reader(file)
+            k = 0
+            for row in reader:
+                answer_list.insert(k, row)
+                k += 1
+        random.shuffle(answer_list)
+        answer_list = ''.join(map(str, answer_list))
+        answer_list = answer_list.replace("{", "").replace("}", "")
+        print(answer_list)
+
+    else:
+        await ctx.send("wrong channel dumbass")
+
+
 @client.command(help='| Responds with "Sup Bitch"')
 async def hello(ctx):
     await ctx.send("sup")
@@ -189,9 +220,7 @@ async def clear(ctx, amount=5):
         await ctx.send(f'Enter a value greater than 0 {member.mention}, ROGER ROGER')
         print(f'{member} has entered a value less than 0 for clear')
     else:
-        amount += 1
-        await ctx.channel.purge(limit=amount)
-        amount += -1
+        await ctx.channel.purge(limit=amount + 1)
         await ctx.send(f'Bot has cleared {amount} messages for {member.mention}, ROGER ROGER')
         print(f'Bot has cleared {amount} messages for {member}')
 
