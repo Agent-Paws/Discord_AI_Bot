@@ -193,10 +193,13 @@ async def nostalgia(ctx):
                 answer_list.insert(k, row)
                 k += 1
         random.shuffle(answer_list)
-        answer_list = ''.join(map(str, answer_list))
-        answer_list = answer_list.replace("{", "").replace("}", "")
-        print(answer_list)
-
+        i = 0
+        for word in answer_list:
+            i += 1
+            word = ''.join(map(str, word))
+            word = word.replace("{", "").replace("}", "")
+            await ctx.send(word)
+        await ctx.send("done")
     else:
         await ctx.send("wrong channel dumbass")
 
