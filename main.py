@@ -135,7 +135,7 @@ mvoted_dict = {'username': 'voted for'}
 @client.command(pass_context=True)
 async def votemute(ctx, userName: discord.Member):
     voter = ctx.message.author.name
-    member = ctx.me
+    bot = ctx.me
     if voter not in mvoted_dict:
         mvoted_dict.update({voter: 'user'})
 
@@ -151,11 +151,11 @@ async def votemute(ctx, userName: discord.Member):
 
     if mute_dict[userName.name] == 4:
         mute_dict.update({userName.name: 0})
-        server = member.guild
+        server = bot.guild
         role = server.get_role(825795491287138324)
         await userName.add_roles(role)
         embed = discord.Embed(title="User Muted!",
-                              description="**{0}** was muted by **{1}**!".format(member, ctx.message.author),
+                              description="**{0}** was muted by **{1}**!".format(userName.name, bot),
                               color=0xff00f6)
         await ctx.send(embed=embed)
         time.sleep(60)
