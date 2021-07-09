@@ -179,12 +179,13 @@ async def unmute(ctx, userName: discord.Member):
     await userName.remove_roles(role)
 
 
-@has_permissions(administrator=True)
+@has_permissions(kick_members=True)
 @client.command(pass_context=True)
 async def mute(ctx, userName: discord.Member):
-    member = ctx.me
-    server = member.guild
+    bot = ctx.me
+    server = bot.guild
     role = server.get_role(825795491287138324)
+    await ctx.send("**{0}** was muted by **{1}**!".format(userName.name, bot))
     await userName.add_roles(role)
 
 
