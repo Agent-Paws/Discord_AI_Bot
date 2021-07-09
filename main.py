@@ -118,7 +118,9 @@ async def votekick(ctx, userName: discord.User):
     if str(voted_dict[voter]) == str(userName.name): #check if the user has voted for the same user before
         await ctx.send("You have already voted!")
     else: #add the vote
-        if userName.name not in kick_dict:
+        if str.lower(userName.name) == str.lower('Pillow'):
+            await ctx.send(f'You can not vote to mute the creator')
+        elif userName.name not in kick_dict:
             kick_dict.update({userName.name: 1})
             voted_dict.update({voter: userName.name})
         else:
@@ -140,26 +142,33 @@ async def votemute(ctx, userName: discord.Member):
         mvoted_dict.update({voter: 'user'})
 
     if str(mvoted_dict[voter]) != str(userName.name):
-        if userName.name not in mute_dict:
+        if str.lower(userName.name) == str.lower('Pillow'):
+            await ctx.send(f'You can not vote to mute the creator')
+        elif userName.name not in mute_dict:
             mute_dict.update({userName.name: 1})
             mvoted_dict.update({voter: userName.name})
+            await ctx.send(f'{mute_dict[userName.name]}/4 people have voted to mute {userName.display_name}')
         else:
             mute_dict[userName.name] += 1
-        await ctx.send(f'{mute_dict[userName.name]}/4 people have voted to mute {userName.display_name}')
+            await ctx.send(f'{mute_dict[userName.name]}/4 people have voted to mute {userName.display_name}')
+
     else:
         await ctx.send("You have already voted!")
 
-    if mute_dict[userName.name] == 4:
-        mute_dict.update({userName.name: 0})
-        server = bot.guild
-        role = server.get_role(825795491287138324)
-        await userName.add_roles(role)
-        embed = discord.Embed(title="User Muted!",
-                              description="**{0}** was muted by **{1}**!".format(userName.name, bot),
-                              color=0xff00f6)
-        await ctx.send(embed=embed)
-        time.sleep(60)
-        await userName.remove_roles(role)
+    try:
+        if mute_dict[userName.name] == 4:
+            mute_dict.update({userName.name: 0})
+            server = bot.guild
+            role = server.get_role(825795491287138324)
+            await userName.add_roles(role)
+            embed = discord.Embed(title="User Muted!",
+                                  description="**{0}** was muted by **{1}**!".format(userName.name, bot),
+                                  color=0xff00f6)
+            await ctx.send(embed=embed)
+            time.sleep(60)
+            await userName.remove_roles(role)
+    except KeyError:
+        print("person not in dict")
 
 
 @client.command(pass_context=True)
