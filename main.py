@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 from collections import namedtuple
 
 load_dotenv()
-TOKEN = os.getenv("DISCORD_TOKEN")
+TOKEN = os.getenv("NTk4MzAxMzc5NzY4ODc3MDU2.XSUplA.v-qumks9ju5KHvKEdS30Kfmc1_Q") 
 
 client = commands.Bot(command_prefix='~')
 
